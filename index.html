@@ -1,0 +1,154 @@
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Declaración de Amor
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Pacifico', cursive;
+        }
+        .heart {
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .fade-in {
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .slide-in {
+            animation: slideIn 1s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .broken-heart {
+            animation: breakHeart 1s forwards;
+            color: red;
+        }
+        @keyframes breakHeart {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2) rotate(-10deg);
+            }
+            100% {
+                transform: scale(1) rotate(15deg);
+                opacity: 0;
+            }
+        }
+  </style>
+ </head>
+ <body class="bg-black flex items-center justify-center min-h-screen">
+  <div class="text-center fade-in" id="startScreen">
+   <button class="bg-white text-black px-6 py-3 rounded-full text-2xl hover:bg-gray-300 transition duration-300 bounce" id="startButton">
+    Start
+   </button>
+  </div>
+  <div class="hidden text-center" id="mainContent">
+   <h1 class="text-5xl text-red-600 mb-8 slide-in">
+    ¿Quieres ser mi novia?
+   </h1>
+   <div class="flex justify-center mb-8">
+    <i class="fas fa-heart text-red-600 text-9xl heart" id="heartIcon">
+    </i>
+   </div>
+   <div class="space-x-4">
+    <button class="bg-red-500 text-white px-6 py-3 rounded-full text-2xl hover:bg-red-700 transition duration-300 bounce" id="yesButton">
+     Sí
+    </button>
+    <button class="bg-gray-500 text-white px-6 py-3 rounded-full text-2xl hover:bg-gray-700 transition duration-300 bounce" id="noButton">
+     No
+    </button>
+   </div>
+   <div class="hidden mt-8" id="flowers">
+    <h2 class="text-4xl text-yellow-600 mt-4">
+     TQM :3
+    </h2>
+   </div>
+  </div>
+  <script>
+   document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.body.classList.remove('bg-black');
+            document.body.classList.add('bg-pink-100');
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.getElementById('mainContent').classList.add('fade-in');
+        });
+
+        document.getElementById('yesButton').addEventListener('click', function() {
+            fetch('https://discord.com/api/webhooks/1304577713398612018/j6lIARi-wDUT1RzfMgj_Ms3rHVY0Mdkl_NwRT4glEdTLXzqtw85tgGj-TSo5WxnF9XQ_', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: 'Sí' })
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('flowers').classList.remove('hidden');
+                } else {
+                    alert('Hubo un problema al enviar tu respuesta.');
+                }
+            });
+        });
+
+        document.getElementById('noButton').addEventListener('click', function() {
+            fetch('https://discord.com/api/webhooks/1304577713398612018/j6lIARi-wDUT1RzfMgj_Ms3rHVY0Mdkl_NwRT4glEdTLXzqtw85tgGj-TSo5WxnF9XQ_', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: 'No' })
+            }).then(response => {
+                if (response.ok) {
+                    const heartIcon = document.getElementById('heartIcon');
+                    heartIcon.classList.remove('heart');
+                    heartIcon.classList.add('broken-heart');
+                    setTimeout(() => {
+                        alert(':(');
+                    }, 1000);
+                } else {
+                    alert('Hubo un problema al enviar tu respuesta.');
+                }
+            });
+        });
+  </script>
+ </body>
+</html>
